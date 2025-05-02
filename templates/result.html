@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Prediksi - Sistem Prediksi Kelayakan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Sistem Prediksi Kelayakan</div>
+            <nav>
+                <ul>
+                    <li><a href="/">Beranda</a></li>
+                    <li><a href="/about">Tentang</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>Hasil Prediksi</h1>
+            
+            <div class="result-card {% if prediction == 'Layak' %}result-layak{% else %}result-tidak-layak{% endif %}">
+                <div class="result-title">
+                    <span id="result-text" class="{% if prediction == 'Layak' %}layak{% else %}tidak-layak{% endif %}">{{ prediction }}</span>
+                </div>
+                <div class="confidence" id="confidence-text">
+                    Tingkat Kepercayaan: {{ confidence|round(2) }}%
+                </div>
+                <button id="copy-result" style="margin-top: 15px; font-size: 14px; padding: 8px 15px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 5px;">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Salin Hasil
+                </button>
+            </div>
+            
+            <div class="input-review">
+                <h2>Data Input</h2>
+                <table class="input-table">
+                    <thead>
+                        <tr>
+                            <th>Fitur</th>
+                            <th>Nilai</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for feature, value in input_data.items() %}
+                        <tr>
+                            <td>{{ feature }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="/" class="back-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 5px;">
+                        <path d="M19 12H5"></path>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Kembali ke Form Prediksi
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 20px; color: var(--light-text);">
+            &copy; 2025 Sistem Prediksi Kelayakan
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
